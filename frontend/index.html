@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hamini Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .status::before {
+            content: "✓";
+            background: #28a745;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .info-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #667eea;
+            background: white;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #555;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .api-test {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .api-test:hover {
+            background: #d0e9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 AI Hamini Store</h1>
+        <div class="status">시스템 정상 작동 중</div>
+        
+        <div class="info">
+            <div class="info-item">
+                <span class="info-label">도메인</span>
+                <span class="info-value">ai.hamini.store</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Frontend 경로</span>
+                <span class="info-value">/opt/ai/frontend</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Backend 경로</span>
+                <span class="info-value">/opt/ai/backend (포트 5000)</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">프로토콜</span>
+                <span class="info-value" id="protocol">로딩 중...</span>
+            </div>
+        </div>
+        
+        <div class="api-test" onclick="testAPI()">
+            <strong>🔗 API 테스트</strong>
+            <div id="api-result" style="margin-top: 10px; font-size: 0.9rem;"></div>
+        </div>
+        
+        <div class="footer">
+            설정 완료 - Ready for Development 🎉
+        </div>
+    </div>
+    
+    <script>
+        // 프로토콜 표시
+        document.getElementById('protocol').textContent = 
+            window.location.protocol === 'https:' ? 'HTTPS ✓ (보안 연결)' : 'HTTP';
+        
+        // API 테스트 함수
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.textContent = '테스트 중...';
+            
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent = '✓ Backend API 연결 성공!';
+                    resultDiv.style.color = '#155724';
+                } else {
+                    throw new Error('API 응답 없음');
+                }
+            } catch (error) {
+                resultDiv.textContent = '⚠ Backend API 미설정 (설정 후 사용 가능)';
+                resultDiv.style.color = '#856404';
+            }
+        }
+    </script>
+</body>
+</html>

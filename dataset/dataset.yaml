@@ -1,0 +1,16 @@
+# AI Dataset Configuration
+# Generated: 2025-12-18T06:03:45.650248
+
+path: /opt/ai/dataset  # dataset root dir
+train: images/train  # train images (relative to 'path')
+val: images/val  # val images (relative to 'path')
+test: images/test  # test images (optional)
+
+# Classes
+names:
+  0: car
+  1: person
+  2: object
+
+# Number of classes
+nc: 3
